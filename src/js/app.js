@@ -30,11 +30,11 @@ App = {
         /*
          * Replace me...
          */
-        $.getJSON("MyLandContract.json", function (house) {
+        $.getJSON("PropertyTitle.json", function (house) {
             // Instantiate a new truffle contract from artifact
-            App.contracts.MyLandContract = TruffleContract(house);
+            App.contracts.PropertyTitle = TruffleContract(house);
             // Connect provider to interact with contract
-            App.contracts.MyLandContract.setProvider(App.web3Provider);
+            App.contracts.PropertyTitle.setProvider(App.web3Provider);
             // App.listenForEvents();
             console.log("1. initContract");
             return App.render();
@@ -61,14 +61,14 @@ App = {
         });
 
         // Load contract data
-        App.contracts.MyLandContract.deployed()
+        App.contracts.PropertyTitle.deployed()
             .then(function (instance) {
                 houseInstance = instance;
                 console.log("1. Deploy : ", houseInstance);
-                return houseInstance.getNoOfLands(App.account);
+                return houseInstance.getUnsold();
             })
             .then(function (result) {
-                console.log("Total land: " + result);
+                console.log("Unsold landID: " + result);
             })
             .catch(function (error) {
                 console.warn(error);
@@ -80,9 +80,9 @@ App = {
         var propLocation = $("#location").val();
         var propCost = $("#cost").val();
 
-        App.contracts.MyLandContract.deployed()
+        App.contracts.PropertyTitle.deployed()
             .then(function (instance) {
-                return instance.addLand(etherAddress, propLocation, propCost);
+                return instance.add(propCost, propLocation, etherAddress);
             })
             .then(function (result) {
                 console.log(result);
@@ -92,13 +92,15 @@ App = {
             });
 
         //
-        App.contracts.MyLandContract.deployed()
+        App.contracts.PropertyTitle.deployed()
             .then(function (instance) {
                 houseInstance = instance;
-                return houseInstance.getNoOfLands(App.account);
+                return houseInstance.getUnsold();
             })
             .then(function (result) {
-                console.log("Total Land: " + result);
+                result.forEach((res) => {
+                    console.log("Unsold LandID: " + res);
+                });
             })
             .catch(function (err) {
                 console.warn(err);
