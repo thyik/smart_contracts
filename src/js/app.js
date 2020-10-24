@@ -106,6 +106,37 @@ App = {
                 console.warn(err);
             });
     },
+
+    buyProperty: function () {
+        var etherAddress = $("#newEtherAddress").val();
+        var propId = $("#propid").val();
+
+        App.contracts.PropertyTitle.deployed()
+            .then(function (instance) {
+                return instance.buy(propId, etherAddress);
+            })
+            .then(function (result) {
+                console.log(result);
+            })
+            .catch(function (err) {
+                console.error(err);
+            });
+
+        //
+        App.contracts.PropertyTitle.deployed()
+            .then(function (instance) {
+                houseInstance = instance;
+                return houseInstance.getUnsold();
+            })
+            .then(function (result) {
+                result.forEach((res) => {
+                    console.log("Unsold LandID: " + res);
+                });
+            })
+            .catch(function (err) {
+                console.warn(err);
+            });
+    },
 };
 
 $(function () {

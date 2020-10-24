@@ -17,6 +17,14 @@
     <input type="text" id="cost" name="cost"><br>
     <br><button type="submit" class="btn btn-primary">Add Property</button>
   </form>
+
+  <form onSubmit="App.buyProperty(); return false;">
+    <label for="newEtherAddress">New Ether address:</label><br>
+    <input type="text" id="newEtherAddress" name="newEtherAddress"><br>
+    <label for="PropID">Property ID:</label><br>
+    <input type="text" id="propid" name="propid"><br>
+    <br><button type="submit" class="btn btn-primary">Buy Property</button>
+  </form>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script scr="js/bootstrap.min.js"></script>
